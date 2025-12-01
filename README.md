@@ -1,7 +1,5 @@
 # 📚 Fundamentos de Algoritmia (FAL)
 
-![Estado del Proyecto](https://img.shields.io/badge/Estado-Terminado-green) ![Asignatura](https://img.shields.io/badge/Universidad-FAL-blue)
-
 Este repositorio contiene la resolución de diferentes ejercicios de la asignatura **Fundamentos de Algoritmia (FAL)**.
 
 El objetivo principal es ofrecer soluciones **eficientes y correctas**, enfocándose en la claridad del código y el uso de buenas prácticas algorítmicas.
