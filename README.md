@@ -9,7 +9,7 @@ El objetivo es mostrar soluciones **eficientes y correctas**, enfocándose en la
 Aquí encontrarás ejercicios resueltos divididos por la técnica de programación utilizada:
 
 ### 1. 🔄 Iterativos
-Ejercicios resueltos utilizando bucles (`while`) para optimizar el recorrido de datos sin uso de la pila de recursión.
+Ejercicios resueltos utilizando bucles (`while`) siempre con máximo coste lineal.
 
 ### 2. 🌀 Recursivos
 Soluciones que aplican el principio de recursividad (casos base y casos recursivos) para dividir el problema en subproblemas más pequeños.
@@ -22,7 +22,7 @@ Implementación de algoritmos de búsqueda exhaustiva para encontrar soluciones 
 ## 🛠️ Tecnologías / Lenguaje
 
 * **Lenguaje:** [C++]
-* **IDE Recomendado:** [Ej: Visual Studio Code / Eclipse]
+* **IDE Recomendado:** [Ej: Visual Studio 2022 / Visual Studio Code]
 
 ## ⚠️ Nota 
 
