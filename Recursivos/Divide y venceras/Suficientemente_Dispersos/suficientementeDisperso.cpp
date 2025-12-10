@@ -17,7 +17,7 @@ bool disperso(vector<int>& v, int dispersion, int ini, int final) {
     int mitadIzq = disperso(v, dispersion, ini, mitad);
     int mitadDer = disperso(v, dispersion, mitad + 1, final);
 
-    return mitadDer & mitadIzq;
+    return mitadDer && mitadIzq;
 }
 
 bool casoDePrueba() {
