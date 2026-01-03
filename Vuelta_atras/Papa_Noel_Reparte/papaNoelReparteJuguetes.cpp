@@ -7,10 +7,16 @@ using namespace std;
 typedef struct {
     int numJuguetes;
     int numNinos;
+    int satisMin;
+    vector<int>cantidadJuguete;
     vector<string> tipos;
+    vector<vector<int>> satisfacion;
 } tDatos;
 
-bool esValida(tDatos& datos, vector<int>& solParcial, int k, int juguete) {
+bool esValida(tDatos& datos, vector<int>& solParcial, int k, int juguete, vector<int>& juguetesElegidos, int nino) {
+    if (juguetesElegidos[juguete] >= datos.cantidadJuguete[juguete]) {//No se pueden elegir mas juguetes de este tipo 
+        return false;
+    }
     if (k % 2 != 0) {
 
         if (juguete <= solParcial[k - 1]) {
@@ -19,12 +25,17 @@ bool esValida(tDatos& datos, vector<int>& solParcial, int k, int juguete) {
         if (datos.tipos[juguete] == datos.tipos[solParcial[k - 1]]) {
             return false;
         }
+
+        if ((datos.satisfacion[nino][juguete] + datos.satisfacion[nino][solParcial[k - 1]]) < datos.satisMin) {
+            return false;
+        }
+
     }
 
     return true;
 }
 
-void papaNoelReparte(tDatos& datos, vector<int>& solParcial, int k, bool& hayAsignacion) {
+void papaNoelReparte(tDatos& datos, vector<int>& solParcial, vector<int>& juguetesElegidos, int k, bool& hayAsignacion) {
     if (k == solParcial.size()) {
         hayAsignacion = true;
         for (int i = 0; i < solParcial.size(); ++i) {
@@ -36,28 +47,39 @@ void papaNoelReparte(tDatos& datos, vector<int>& solParcial, int k, bool& hayAsi
     }
 
     for (int juguete = 0; juguete < datos.numJuguetes; ++juguete) {
-        if (esValida(datos, solParcial, k, juguete)) {
+        if (esValida(datos, solParcial, k, juguete, juguetesElegidos, k / 2)) {
             solParcial[k] = juguete;
-            papaNoelReparte(datos, solParcial, k + 1, hayAsignacion);
+            juguetesElegidos[juguete]++;
+            papaNoelReparte(datos, solParcial, juguetesElegidos, k + 1, hayAsignacion);
+            juguetesElegidos[juguete]--;
         }
     }
 }
 
 bool casoDePrueba() {
     tDatos datos;
-    if (!(cin >> datos.numJuguetes >> datos.numNinos)) {
+    if (!(cin >> datos.numJuguetes >> datos.numNinos >> datos.satisMin)) {
         return false;
     }
-
+    datos.cantidadJuguete.resize(datos.numJuguetes);
+    for (int a = 0; a < datos.numJuguetes; ++a) {
+        cin >> datos.cantidadJuguete[a];
+    }
     datos.tipos.resize(datos.numJuguetes);
     for (int i = 0; i < datos.numJuguetes; ++i) {
         cin >> datos.tipos[i];
     }
+    datos.satisfacion.resize(datos.numNinos, vector<int>(datos.numJuguetes));
 
+    for (int i = 0; i < datos.numNinos; ++i) {
+        for (int j = 0; j < datos.numJuguetes; ++j) {
+            cin >> datos.satisfacion[i][j];
+        }
+    }
     bool hayAsignacion = false;
     vector<int> solParcial(datos.numNinos * 2);
-
-    papaNoelReparte(datos, solParcial, 0, hayAsignacion);
+    vector<int>juguetesElegidos(datos.numJuguetes, 0);
+    papaNoelReparte(datos, solParcial, juguetesElegidos, 0, hayAsignacion);
 
     if (!hayAsignacion) {
         cout << "SIN SOLUCION" << endl;
@@ -68,9 +90,7 @@ bool casoDePrueba() {
 }
 
 int main() {
-    // Optimizacion de E/S habitual en jueces online, aunque no estrictamente necesaria
-    // ios_base::sync_with_stdio(false);
-    // cin.tie(NULL);
+
 
     while (casoDePrueba());
     return 0;
